@@ -1,0 +1,26 @@
+networks:
+  fileshare_net:
+    driver: bridge
+
+services:
+
+  # == VARIABLES == #
+  # USERNAME        #
+  # PASSWORD        #
+  # STORAGE         #
+  # =============== #
+
+  smb_server:
+    image: dockurr/samba:latest
+    container_name: smb_server
+    restart: always
+    ports:
+      - 445:445
+    environment:
+      - USER=${USERNAME}
+      - PASS=${PASSWORD}
+      - NAME="web_home"
+    volumes:
+      - ${STORAGE}:/storage
+    networks:
+      - fileshare_net
